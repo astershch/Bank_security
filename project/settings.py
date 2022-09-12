@@ -7,14 +7,7 @@ env = Env()
 env.read_env()
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': env.str('DB_HOST'),
-        'PORT': '5434',
-        'NAME': 'checkpoint',
-        'USER': env.str('DB_USER'),
-        'PASSWORD': env.str('DB_PASSWORD'),
-    }
+    'default': env.dj_db_url('DB_DATACENTER')
 }
 
 INSTALLED_APPS = ['datacenter']
@@ -25,7 +18,7 @@ DEBUG = env.bool('APP_DEBUG', default=False)
 
 ROOT_URLCONF = 'project.urls'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
